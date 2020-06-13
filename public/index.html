@@ -16,6 +16,9 @@
             background: darkturquoise;
         }
     </style>
+
+<script type="text/javascript" src="preview.js"></script>
+
 </head>
 <body>
 
@@ -26,14 +29,21 @@
             <div class="form-group">
                 <form action="/upload" method="post" enctype="multipart/form-data">
                     <!-- <input class="form-control-file" type="file" multiple accept="image/*" name="photo" > -->
-                    <input class="form-control-file" type="file" multiple name="photo" >
+                    <input class="form-control-file" type="file" multiple name="photo"  onchange="doTest('fileInput1')" id="fileInput1">
                     <input type="text" name="text1" >
                     <input type="text" name="text2" >
                     <input type="text" name="tag1" >
                     <input class="btn mt-3" type="submit" value="upload">
                 </form>
             </div>
-        </div>
+
+    <!-- <p><input type="file" id="fileInput0" name="myfile" size="30" onchange="doTest()"></p> -->
+    
+        <!-- <img id="uploadPreview" src="" width="200" style="display:none" /> -->
+    <div id="gallery">
+    </div>
+
+    </div>
     </div>
 </div>
 

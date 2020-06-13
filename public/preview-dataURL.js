@@ -13,41 +13,20 @@ if (window.FileReader) {
     for (file of files) {
       index++;
       console.log(index, 'file', file);
-      const previewid = 'uploadPreview_' + index;
-      // var reader = new FileReader();
-      // reader.onload = function (event) {
-      //   const preview = document.getElementById(previewid);
-      //   preview.src = event.target.result;
-      //   // preview.style.display = 'block';
-      //   preview.style.display = 'inline';
-      // };
-      // reader.readAsDataURL(file);
+      const previewid = 'uploadPreview+_' + index;
+      var reader = new FileReader();
+      reader.onload = function (event) {
+        const preview = document.getElementById(previewid);
+        preview.src = event.target.result;
+        // preview.style.display = 'block';
+        preview.style.display = 'inline';
+      };
+      reader.readAsDataURL(file);
       items.push(
-        '<img id="' + previewid + '" src="" width="200" style="display:none"/>'
-        // '" src="" width="200" style="display:none" class="img_gallery"/>'
+        '<img id="' + previewid + '" src="" width="200" style="display:none" />'
       );
     }
     document.getElementById('gallery').innerHTML = items.join('\n');
-    setTimeout(() => {
-      setURLs(files);
-    }, 0);
-  }
-  function setURLs(files) {
-    console.log('setURLs files', files);
-    // const nodes = document.querySelectorAll('.img_gallery');
-    // console.log('setURLs nodes', nodes);
-    let index = 0;
-    for (file of files) {
-      index++;
-      const previewid = 'uploadPreview_' + index;
-      const elem = document.getElementById(previewid);
-      console.log('elem', elem);
-      elem.src = URL.createObjectURL(file);
-      elem.style.display = 'inline';
-      elem.onload = () => {
-        URL.revokeObjectURL(elem.src); // free memory
-      };
-    }
   }
 } else {
   alert('FileReader object not found :( \nTry using Chrome, Firefox or WebKit');

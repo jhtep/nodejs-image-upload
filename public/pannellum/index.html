@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grand Canyon EPV</title>
+  <!-- Pannellum framework code -->
+  <link rel="stylesheet" href="css/pannellum.css" />
+  <script type="text/javascript" src="js/pannellum.js"></script>
+  <!-- Preload MEDIA -->
+  <link rel="preload" as="image" href="imgs/epv_logo_200x200.png" />
+  <style>
+    #vrCanvasID {
+      /* width: 600px;
+      height: 400px; */
+      width: 100%;
+      height: 320px;
+    }
+
+    /* HOTSPOTS */
+
+    .custom-hotspot {
+      height: 30px;
+      width: 30px;
+      background: #FF4500;
+    }
+
+    .custom-hotspot-img {
+      height: 30px;
+      width: 30px;
+      background: blue;
+    }
+
+    .custom-hotspot-vid {
+      height: 30px;
+      width: 30px;
+      background: yellow;
+    }
+
+    .heart {
+      width: 50px;
+      height: 40px;
+    }
+
+    .heart:before,
+    .heart:after {
+      position: absolute;
+      content: "";
+      width: 25px;
+      height: 40px;
+      left: 25px;
+      background-color: purple;
+      border-radius: 25px 25px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+
+    .heart:after {
+      left: 0;
+      transform-origin: 100% 100%;
+      transform: rotate(45deg);
+    }
+
+    /* TOOLTIPS TEXT */
+
+    div.custom-tooltip span {
+      visibility: hidden;
+      position: absolute;
+      border-radius: 3px;
+      background-color: #fff;
+      color: #000;
+      text-align: center;
+      max-width: 200px;
+      padding: 5px 10px;
+      margin-left: -220px;
+      cursor: default;
+    }
+
+    div.custom-tooltip:hover span {
+      visibility: visible;
+    }
+
+    div.custom-tooltip:hover span:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #fff transparent transparent transparent;
+      bottom: -20px;
+      left: -10px;
+      margin: 0 50%;
+    }
+
+    /* TOOLTIPS IMAGES */
+
+    div.custom-tooltip-img span {
+      visibility: hidden;
+      position: absolute;
+      border-radius: 3px;
+      background-color: #fff;
+      color: #000;
+      text-align: center;
+      max-width: 200px;
+      padding: 10px 10px 5px 10px;
+      margin-left: -220px;
+      cursor: default;
+    }
+
+    div.custom-tooltip-img:hover span {
+      visibility: visible;
+    }
+
+    div.custom-tooltip-img:hover span:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #fff transparent transparent transparent;
+      bottom: -20px;
+      left: -10px;
+      margin: 0 50%;
+    }
+
+    /* TOOLTIPS VIDEOS */
+
+    div.custom-tooltip-vid span {
+      visibility: hidden;
+      position: absolute;
+      border-radius: 3px;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      max-width: 320px;
+      padding: 10px 10px 5px 10px;
+      margin-left: -220px;
+      cursor: default;
+    }
+
+    div.custom-tooltip-vid:hover span {
+      visibility: visible;
+    }
+  </style>
+  <!--  -->
+  <link rel="stylesheet" href="css/epv.css">
+</head>
+
+<body>
+
+  <div id="vrCanvasID"></div>
+  <div id="landscapeCaptionID">
+    <p>
+      Best viewed in landscape!
+    </p>
+  </div>
+
+  <script>
+    pannellum.viewer('vrCanvasID', {
+      "type": "equirectangular",
+      "showControls": true,
+      "panorama": "../uploads/pan-images/GS__0024.JPG ",
+      // "panorama": "imgs/backyardPool.jpg",
+      // "panorama": "imgs/backyardPool_v2.jpg",
+      // "panorama": "imgs/backyardPool_v3.jpg",
+      /* Display mouse clicks in browser console */
+      // "hotSpotDebug": true,
+      "hotSpots": [
+        {
+          "pitch": 2.3,
+          "yaw": -19,
+          "cssClass": "custom-hotspot-img",
+          "createTooltipFunc": hotspotImg,
+          "createTooltipArgs": "imgs/epv_logo_200x200.png",
+          "clickHandlerFunc": epvFunc,
+          "clickHandlerArgs": "Display Image on hover"
+        },
+        {
+          "pitch": -9,
+          "yaw": -36,
+          "cssClass": "custom-hotspot",
+          "createTooltipFunc": hotspot,
+          "createTooltipArgs": "EPV-link",
+          "URL": "https://epvisual.com/"
+        },
+        {
+          "pitch": -9.0,
+          "yaw": 35.0,
+          "cssClass": "heart",
+          "createTooltipFunc": hotspot,
+          "createTooltipArgs": "Call JS function ref Console Log",
+          "clickHandlerFunc": epvFunc,
+          "clickHandlerArgs": "CSS heart hotspot"
+        },
+        {
+          "pitch": 1.2,
+          "yaw": 12.3,
+          "cssClass": "custom-hotspot-vid",
+          "createTooltipFunc": hotspotVid,
+          "createTooltipArgs": "videos/jwtIntro.m4v"
+        }
+      ]
+    });
+
+    // Hot spot creation
+    function hotspot(hotSpotDiv, args) {
+      hotSpotDiv.classList.add('custom-tooltip');
+      var span = document.createElement('span');
+      span.innerHTML = args;
+      hotSpotDiv.appendChild(span);
+      span.style.width = span.scrollWidth - 20 + 'px';
+      span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+      span.style.marginTop = -span.scrollHeight - 12 + 'px';
+    }
+    // Hot spot creation IMG
+    function hotspotImg(hotSpotDiv, args) {
+      hotSpotDiv.classList.add('custom-tooltip-img');
+      var span = document.createElement('span');
+      span.innerHTML = "<img src='" + args + "'/>";
+      hotSpotDiv.appendChild(span);
+      span.style.width = span.scrollWidth - 20 + 'px';
+      span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+      span.style.marginTop = -span.scrollHeight - 12 + 'px';
+    }
+    // Hot spot creation VID
+    function hotspotVid(hotSpotDiv, args) {
+      hotSpotDiv.classList.add('custom-tooltip-vid');
+      var span = document.createElement('span');
+      span.innerHTML = "<video id=\"vidID\" width=\"320\" height=\"240\" src=\" " + args + "\" controls></video>";
+      hotSpotDiv.appendChild(span);
+      span.style.width = span.scrollWidth - 20 + 'px';
+      span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+      span.style.marginTop = -(span.scrollHeight - hotSpotDiv.offsetHeight) / 2 + 'px';
+      //
+      // Pause video playback on MOUSE OUT
+      let vidObj = document.querySelector('#vidID');
+      vidObj.addEventListener('mouseout', (event) => {
+        vidObj.pause();
+      });
+    }
+
+    // Local JS function
+    function epvFunc(hotSpotDiv, args) {
+      console.log("epvFunc hotSpotDiv =  " + hotSpotDiv);
+      console.log("epvFunc args =  " + args);
+      // alert("epvFunc called successfully: " + args);
+    }
+
+  </script>
+  <script type="text/javascript" src="js/epv.js"></script>
+</body>
+
+</html>

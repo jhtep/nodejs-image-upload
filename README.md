@@ -9,3 +9,7 @@ npm install && npm start
 Then go to [http://localhost:3010](http://localhost:3010).
 
 Explanation - https://medium.com/@nitinpatel_20236/image-upload-via-nodejs-server-3fe7d3faa642
+
+http://localhost:3010/pannellum/
+
+      "panorama": "imgs/grandCanyonEPV.jpg",

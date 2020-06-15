@@ -8,7 +8,7 @@ const PORT = 3010;
 
 app.use(express.static('public'));
 
-const dest = __dirname + '/uploads/images';
+const dest = __dirname + '/public/uploads/images';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

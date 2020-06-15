@@ -1,0 +1,54 @@
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+/* 
+  PAGE LAYOUT 
+*/
+
+#landscapeCaptionID {
+  text-align: center;
+}
+
+@media screen and (orientation: portrait) {
+  #landscapeCaptionID {
+    display: block;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  #landscapeCaptionID {
+    display: none;
+  }
+}
+
+@media screen and (pointer: fine) {
+  #landscapeCaptionID {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 667px) {
+  #vrCanvasID {
+    height: 375px;
+  }
+}
+
+@media screen and (min-width: 736px) {
+  #vrCanvasID {
+    height: 414px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #vrCanvasID {
+    height: 768px;
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  #vrCanvasID {
+    height: 1024px;
+  }
+}
